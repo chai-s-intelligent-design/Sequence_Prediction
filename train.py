@@ -89,26 +89,28 @@ def main():
     else:
         torch.cuda.set_device(args.gpu)
         device = torch.device(f"cuda:{args.gpu}")
+    # 定义数据集
     num_classes = 51
     class_num = 0
     max_time = 60
     time_embedding = 10
     look_back = 1
     include_time = True
+
     dataset = SequenceDataset(original_dir, num_classes, class_num, max_time,
                               time_embedding, look_back, include_time)
+    # 数据集分割
     train_dataset = dataset.get_subset(0, int(len(dataset) * 0.8))
     val_dataset = dataset.get_subset(int(len(dataset) * 0.8), len(dataset))
     train_loader = DataLoader(train_dataset, batch_size=1, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=1, shuffle=False)
+    # 定义模型
     input_size = look_back * num_classes + time_embedding if include_time else look_back * num_classes
-    model = LSTMModel(input_size, 128, 1, num_classes)
+    model = LSTMModel(input_size, 2, 1, num_classes)
     model = model.to(device)
 
     parameters = list(filter(lambda p: p.requires_grad, model.parameters()))
-
     optimizer = torch.optim.Adam(parameters, args.lr, weight_decay=args.wd)
-
     lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, args.epochs * len(train_loader), eta_min=1e-6)
 
@@ -162,8 +164,8 @@ def train(train_loader, model, optimizer, lr_scheduler, epoch, device, args):
         y = y.to(device, non_blocking=True)
 
         # compute output
-        results = model(x, y)
-        loss = model.loss_function(*results)
+        results = model(x)
+        loss = model.loss_function(results[0], y)
         accuracy = calculate_accuracy(results[0], y)
         metric_logger.update(loss=loss, accuracy=accuracy, n=x.shape[2])
 

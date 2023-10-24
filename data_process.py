@@ -2,23 +2,7 @@ import pandas as pd
 import os
 import shutil
 
-# Load the behavior codes
-codes_path = './datasets/clustered_data四类 新的.xlsx'
-data_0_sheet = pd.read_excel(codes_path, sheet_name="0")
-behavior_codes = data_0_sheet.iloc[0, 4:].dropna().values
-
-# Exclude "类别" and create indicator vectors
-behavior_codes_clean = behavior_codes[:-1]
 indicator_vectors_clean = {}
-for i, code in enumerate(behavior_codes_clean):
-    vector = [0] * 51
-    vector[i] = 1
-    indicator_vectors_clean[code] = vector
-
-# Load the data
-data_path = './datasets/匹配结果-0.xlsx'
-data = pd.read_excel(data_path)
-
 
 # Function to identify and merge indicator vectors within the same time period
 def process_and_merge_vectors(individual_data):
@@ -55,15 +39,35 @@ def process_and_export_individual(individual_data, output_dir, start_index):
     merged_vectors_df.to_csv(file_path, index=False, encoding='utf-8')
 
 
-# Create output directory
-output_dir = './datasets/original/0'
-os.makedirs(output_dir, exist_ok=True)
+if __name__ == "__main__":
 
-start_index = 0
-map_file_path = os.path.join(output_dir, "map_file.txt")
-with open(map_file_path, "w") as map_file:
-    for seq_num in data["序号"].unique():
-        individual_data = data[data["序号"] == seq_num]
-        process_and_export_individual(individual_data, output_dir, start_index)
-        map_file.write(f"{seq_num}\t{start_index}\n")
-        start_index += 1
+    ############ 加载所有的类别
+    # Load the behavior codes
+    codes_path = './datasets/clustered_data四类 新的.xlsx'
+    data_0_sheet = pd.read_excel(codes_path, sheet_name="0")
+    behavior_codes = data_0_sheet.iloc[0, 4:].dropna().values
+
+    # Exclude "类别" and create indicator vectors
+    behavior_codes_clean = behavior_codes[:-1]
+    for i, code in enumerate(behavior_codes_clean):
+        vector = [0] * 51
+        vector[i] = 1
+        indicator_vectors_clean[code] = vector
+
+    ############ 读取和处理数据
+    # Load the data
+    data_path = './datasets/匹配结果-0.xlsx'
+    data = pd.read_excel(data_path)
+    # Create output directory
+    output_dir = './datasets/original/0'
+    os.makedirs(output_dir, exist_ok=True)
+
+    start_index = 0
+    map_file_path = os.path.join(output_dir, "map_file.txt")
+    with open(map_file_path, "w") as map_file:
+        for seq_num in data["序号"].unique():
+            individual_data = data[data["序号"] == seq_num]
+            process_and_export_individual(individual_data, output_dir,
+                                          start_index)
+            map_file.write(f"{seq_num}\t{start_index}\n")
+            start_index += 1

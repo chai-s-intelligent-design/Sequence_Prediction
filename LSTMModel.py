@@ -41,8 +41,8 @@ class LSTMModel(nn.Module):
         return outputs, (hidden_state, cell_state)
 
     def focal_loss(self, output, input):
-        alpha = 0.5  # 平衡因子，用于调整易分类样本和困难样本的权重
-        gamma = 2  # 聚焦因子，用于调整难分类样本的权重
+        alpha = 0.7  # 平衡因子，用于调整易分类样本和困难样本的权重
+        gamma = 4  # 聚焦因子，用于调整难分类样本的权重
         ce_loss = F.binary_cross_entropy(output,
                                          input.float(),
                                          reduction='none')  # 计算二元交叉熵损失，不进行求和

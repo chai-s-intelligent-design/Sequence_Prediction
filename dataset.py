@@ -92,7 +92,7 @@ class SequenceDataset(Dataset):
 
 
 if __name__ == "__main__":
-    dataset = SequenceDataset(original_dir, 51, 0, 60, 10, 2, False)
+    dataset = SequenceDataset(original_dir, 51, 0, 60, 10, 2, True)
 
     # 每个人的序列长度不一样，只能设置batch_size为1
     dataloader = DataLoader(dataset, batch_size=1, shuffle=True)

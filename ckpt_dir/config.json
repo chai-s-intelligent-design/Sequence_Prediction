@@ -1,12 +1,12 @@
 {
     "data": "./datasets",
     "workers": 8,
-    "lr": 0.005,
-    "wd": 0.0,
-    "print_freq": 100,
+    "lr": 0.001,
+    "wd": 0.0005,
+    "print_freq": 1,
     "gpu": 0,
-    "epochs": 100,
+    "epochs": 200,
     "start_epoch": 0,
-    "resume": "ckpt_dir/checkpoint.pt",
+    "resume": "",
     "ckpt_dir": "./ckpt_dir"
 }
