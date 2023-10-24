@@ -23,5 +23,8 @@
 ### 输出的损失函数
 考虑到模型在每个时间步数的输出需要与对应的指示向量做损失，而指示向量可以看做是一个多标签的二分类的问题，即有51个类别需要进行判断，因此可以使模型最后的输出同样为一个一个51维的向量，采用sigmoid激活函数将输出值映射到0到1之间，此时损失函数可以采用二元交叉熵损失。
 ### [LSTM](https://mp.weixin.qq.com/s?__biz=MzUyODk0Njc1NQ==&mid=2247483926&idx=1&sn=8cb4861ad6f4a56f8f233c322ebcc5b3&chksm=fa69c13acd1e482ca143d21d476c4f7242a1e438c3a9103fe0931ee18b528176e5c765fa8678&scene=27)
+
 ![Alt text](imgs/image-2.png)
+#### [LSTM的梯度传导是从t+1传导至t时刻](https://www.cnblogs.com/sumwailiu/p/13623985.html)
+
 ### Transformer

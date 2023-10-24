@@ -5,7 +5,6 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 
 
-# 定义模型
 class LSTMModel(nn.Module):
 
     def __init__(self, input_size, hidden_size, num_layers, num_classes):
@@ -16,16 +15,44 @@ class LSTMModel(nn.Module):
                             hidden_size,
                             num_layers,
                             batch_first=True)
-        self.fc1 = nn.Linear(hidden_size, hidden_size)
-        self.fc2 = nn.Linear(hidden_size, num_classes)
+        self.fc = nn.ModuleList([
+            nn.Linear(input_size + hidden_size, 1) for _ in range(num_classes)
+        ])
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
+        if x.dim() != 3:
+            x = x.unsqueeze(0)
         h0 = torch.zeros(self.num_layers, x.size(0),
                          self.hidden_size).to(x.device)
         c0 = torch.zeros(self.num_layers, x.size(0),
                          self.hidden_size).to(x.device)
-        out, _ = self.lstm(x, (h0, c0))
-        out = self.fc1(out)
-        out = self.fc2(F.leaky_relu(out))
-        out = torch.sigmoid(out)
-        return out
+        out, (hidden_state, cell_state) = self.lstm(x, (h0, c0))
+
+        outputs = []
+        for i in range(out.size(1)):
+            output = []
+            for j in range(len(self.fc)):
+                output.append(self.fc[j](torch.cat([out[:, i, :], x[:, i, :]],
+                                                   1)))
+            outputs.append(torch.cat(output, dim=1))
+        outputs = torch.stack(outputs, dim=1)
+        outputs = self.sigmoid(outputs)
+        return outputs, (hidden_state, cell_state)
+
+    def focal_loss(self, output, input):
+        alpha = 0.5  # 平衡因子，用于调整易分类样本和困难样本的权重
+        gamma = 2  # 聚焦因子，用于调整难分类样本的权重
+        ce_loss = F.binary_cross_entropy(output,
+                                         input.float(),
+                                         reduction='none')  # 计算二元交叉熵损失，不进行求和
+        pt = torch.exp(-ce_loss)  # 计算易分类样本的权重（概率）
+        focal_loss = alpha * (1 - pt)**gamma * ce_loss  # 计算Focal Loss
+        return focal_loss.mean()  # 求Focal Loss的平均值作为最终损失
+
+    def loss_function(self, *args):
+        output = args[0]
+        input = args[1]
+        # criterion = nn.BCELoss()
+        loss = self.focal_loss(output, input)
+        return loss
