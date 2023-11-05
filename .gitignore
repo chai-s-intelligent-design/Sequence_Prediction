@@ -1,6 +1,5 @@
 log/
 __pycache__/
-__pycache__/
 EnsembleModel copy.py
 SimpleEnsemble.py
 ensemble_generate.py
