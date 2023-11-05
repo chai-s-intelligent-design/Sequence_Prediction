@@ -1,2 +1,5 @@
 logs/
 __pycache__/
+EnsembleModel copy.py
+SimpleEnsemble.py
+ensemble_generate.py
