@@ -115,9 +115,11 @@ python train.py --num-classes 51 --class-num 0 --max-time 60 --time-embedding 12
 - <span style="color:rgb(238, 51, 119)">0.8</span>
 - <span style="color:rgb(0, 153, 136)">0.92</span>
 ---
-![Alt text](imgs/alpha/F1.png)
-![Alt text](imgs/alpha/Precision.ppg)
-![Alt text](imgs/alpha/Recall.ppg)
+<div style="display: flex;">
+  <img src="imgs/alpha/F1.png" alt="F1" style="max-width: 30%; height: auto;">
+  <img src="imgs/alpha/Precision.png" alt="Precision" style="max-width: 30%; height: auto;">
+  <img src="imgs/alpha/Recall.png" alt="Recall" style="max-width: 30%; height: auto;">
+</div>
 
 #### gamma等其他实验结果用tensorboard查看log目录文件
 最终实验结果为: 
