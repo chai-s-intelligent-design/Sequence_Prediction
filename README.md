@@ -68,9 +68,13 @@
 <center>
 
 $FL\left(p_t\right)=-\alpha_t\left(1-p_t\right)^\gamma \log \left(p_t\right)$
+</center>
 
+<center>
 $p_t=\left\{\begin{array}{cc}p & \text { if } y=1 \\ 1-p & \text { otherwise }\end{array}\right.$
+</center>
 
+<center>
 $\alpha_t=\left\{\begin{array}{cc}\alpha & \text { if } y=1 \\ 1-\alpha & \text { otherwise }\end{array}\right.$
 </center>
 
