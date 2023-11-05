@@ -64,17 +64,20 @@
 
 ### 输出的损失函数
 考虑到模型在每个时间步数的输出需要与对应的指示向量做损失，指示向量可以看做是一个多标签的二分类的问题，即有51个类别需要进行判断，但是每一个指示向量只有$max\_selected$个1，其余都为0，此时正负样本不平衡，并且有些样本难以分类，有些样本容易分类，因此采用<font color="red">focal_loss</font>作为模型的损失函数，其表达式为:
-
 <center>
 
 $FL\left(p_t\right)=-\alpha_t\left(1-p_t\right)^\gamma \log \left(p_t\right)$
 </center>
 
+
 <center>
+
 $p_t=\left\{\begin{array}{cc}p & \text { if } y=1 \\ 1-p & \text { otherwise }\end{array}\right.$
 </center>
 
+
 <center>
+
 $\alpha_t=\left\{\begin{array}{cc}\alpha & \text { if } y=1 \\ 1-\alpha & \text { otherwise }\end{array}\right.$
 </center>
 
