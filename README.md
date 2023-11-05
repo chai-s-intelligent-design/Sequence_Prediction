@@ -28,3 +28,15 @@
 #### [LSTM的梯度传导是从t+1传导至t时刻](https://www.cnblogs.com/sumwailiu/p/13623985.html)
 
 ### Transformer
+
+## 使用方法
+### 训练
+```bash
+python train.py --num-classes 51 --class-num 0 --max-time 60 --time-embedding 128 --look-back 3 --include-time --hidden-dim 128 --num-layers 1 --alpha 0.9803921568627451 --gamma 2.0 --max-selected 4
+```
+### 生成
+```bash
+ python generate.py --ckpt ./ckpt_dir/20231026-154825 --gpu 0 --sequence_length 10
+ ```
+
+ ### 集成训练

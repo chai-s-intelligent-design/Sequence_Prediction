@@ -86,7 +86,8 @@ class SequenceDataset(Dataset):
     def get_subset(self, start, end):
         subset_files = self.file_list[start:end]
         subset = SequenceDataset(self.root, self.num_classes, self.class_num,
-                                 self.max_time, self.time_embedding)
+                                 self.max_time, self.time_embedding,
+                                 self.look_back, self.include_time)
         subset.file_list = subset_files
         return subset
 

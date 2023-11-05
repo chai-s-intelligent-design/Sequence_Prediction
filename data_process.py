@@ -4,6 +4,7 @@ import shutil
 
 indicator_vectors_clean = {}
 
+
 # Function to identify and merge indicator vectors within the same time period
 def process_and_merge_vectors(individual_data):
     new_periods = individual_data["开始时间"].notna()
@@ -48,12 +49,14 @@ if __name__ == "__main__":
     behavior_codes = data_0_sheet.iloc[0, 4:].dropna().values
 
     # Exclude "类别" and create indicator vectors
-    behavior_codes_clean = behavior_codes[:-1]
-    for i, code in enumerate(behavior_codes_clean):
-        vector = [0] * 51
-        vector[i] = 1
-        indicator_vectors_clean[code] = vector
-
+    codemap_file_path = os.path.join('./datasets', "codemap_file.txt")
+    with open(codemap_file_path, "w") as map_file:
+        behavior_codes_clean = behavior_codes[:-1]
+        for i, code in enumerate(behavior_codes_clean):
+            vector = [0] * 51
+            vector[i] = 1
+            indicator_vectors_clean[code] = vector
+            map_file.write(f"{i}\t{code}\n")
     ############ 读取和处理数据
     # Load the data
     data_path = './datasets/匹配结果-0.xlsx'
