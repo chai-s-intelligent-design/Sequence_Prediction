@@ -21,8 +21,10 @@
 #### 输入
 输入由两部分拼接而成
 - "滑动窗口"：采用滑动窗口来控制模型基于历史信息的输入。
-  ![Alt text](imgs/image1.png)
   
+  <div align="center">
+  <img src="imgs/image1.png" alt="Alt text" width="900" height="350">
+  </div>
   自回归模型（AR）的基本思想是：一个时间点的标签值可以由其过去某个时间段内的所有标签值的线性组合表示:<center>
   $Y_t=c+\varphi_1 Y_{t-1}+\varphi_2 Y_{t-2}+\ldots+\varphi_p Y_{t-p}+\xi_t$
   </center>
