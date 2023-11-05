@@ -8,8 +8,8 @@
   <div align="center" ><strong><em>原始数据截图</em></strong></div>
 </div>
 
-- 消费者在每一个时间段可能发生多个消费行为，每个消费行为都是51（num-classes）种的可能的行为之一，因此与传统的one-hot向量编码不同，我们将每一个时间步的消费行为编码为一个51维的指示向量，$indicate=[a_0, a_1, \ldots, a_{50}]$，$a_c \in \{0,1\}$，且$a_c为1$代表着第$c$类消费行为正在发生。
-- 对于每个被试样本，最终的数据表现形式为$sample_j=[indicate_0,\ldots,indicate_{sequence\_length\_of\_j}]$
+- 消费者在每一个时间段可能发生多个消费行为，每个消费行为都是51（num-classes）种的可能的行为之一，因此与传统的one-hot向量编码不同，我们将每一个时间步的消费行为编码为一个51维的指示向量， $indicate=[a_0, a_1, \ldots, a_{50}]$，$a_c \in \{0,1\}$， 且 $a_c为1$ 代表着第$c$类消费行为正在发生。
+- 对于每个被试样本，最终的数据表现形式为 $sample_j=[indicate_0,\ldots,indicate_{sequence\_length\_of\_j}]$
 ### 预测建模
 考虑样本$sample_j$，在第i个的时间步数，模型应该综合前面的已知的样本类别$sample_j[:i],0 \leq i < sequence\_length\_of\_j$，预测当前时间步对应的消费行为指示向量$indicate_i$，这是一个典型的基于时间的seq2seq模型，由于原始输入和预测输出都是同一组数据，因此又是一个自预测的模型，所使用的神经网络模型被赋予了“自预测”模型的含义：
 - 基于前面已知的编码链综合信息预测下一个编码类别。
@@ -22,6 +22,7 @@
 输入由两部分拼接而成
 - "滑动窗口"：采用滑动窗口来控制模型基于历史信息的输入。
   ![Alt text](imgs/image1.png)
+  
   自回归模型（AR）的基本思想是：一个时间点的标签值可以由其过去某个时间段内的所有标签值的线性组合表示:<center>
   $Y_t=c+\varphi_1 Y_{t-1}+\varphi_2 Y_{t-2}+\ldots+\varphi_p Y_{t-p}+\xi_t$
   </center>
