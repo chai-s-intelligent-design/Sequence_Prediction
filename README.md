@@ -25,6 +25,7 @@
   <div align="center">
   <img src="imgs/image1.png" alt="Alt text" width="900" height="350">
   </div>
+  ![Alt text](image6.png)
   自回归模型（AR）的基本思想是：一个时间点的标签值可以由其过去某个时间段内的所有标签值的线性组合表示:
   
   $$Y_t=c+\varphi_1 Y_{t-1}+\varphi_2 Y_{t-2}+\ldots+\varphi_p Y_{t-p}+\xi_t$$
