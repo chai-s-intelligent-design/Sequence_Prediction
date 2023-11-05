@@ -115,12 +115,12 @@ python train.py --num-classes 51 --class-num 0 --max-time 60 --time-embedding 12
 取0.8左右时候综合表现最佳
 
 ---
-- <span style="color:rgb(204, 51, 17)">0.1</span> 
-- <span style="color:rgb(51, 187, 238)">0.4</span>
-- <span style="color:rgb(255, 112, 67)">0.6</span>
-- <span style="color:rgb(192, 192, 192)">0.7</span>
-- <span style="color:rgb(238, 51, 119)">0.8</span>
-- <span style="color:rgb(0, 153, 136)">0.92</span>
+- <span style="color:rgb(204, 51, 17)">0.1(深红色)</span> 
+- <span style="color:rgb(51, 187, 238)">0.4(浅蓝色)</span>
+- <span style="color:rgb(255, 112, 67)">0.6(橘黄色)</span>
+- <span style="color:rgb(192, 192, 192)">0.7(浅灰色)</span>
+- <span style="color:rgb(238, 51, 119)">0.8(粉色)</span>
+- <span style="color:rgb(0, 153, 136)">0.92(深绿色)</span>
 ---
 <div style="display: flex;">
   <img src="imgs/alpha/F1.png" alt="F1" style="max-width: 30%; height: auto;">
