@@ -104,15 +104,12 @@ parser.add_argument('--max-selected',
                     type=int,
                     help='Maximum selected')
 time_str = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-log_dir = "log/" + time_str
-
-writer = SummaryWriter(log_dir)
 
 
 def main():
     args = parser.parse_args()
     assert args.ckpt_dir is not None
-    args.ckpt_dir = args.ckpt_dir + "/" + time_str
+    args.ckpt_dir = args.ckpt_dir + "/" + str(args.class_num) + "/" + time_str
     os.makedirs(args.ckpt_dir, exist_ok=True)
     print("\n".join("%s: %s" % (k, str(v))
                     for k, v in sorted(dict(vars(args)).items())))
@@ -180,7 +177,9 @@ def main():
                 args.resume, checkpoint['epoch']))
         else:
             print("=> no checkpoint found at '{}'".format(args.resume))
-
+    log_dir = "log/" + str(class_num) + "/" + time_str
+    global writer
+    writer = SummaryWriter(log_dir)
     for epoch in range(args.start_epoch, args.epochs):
         # train for one epoch
         train(train_loader, model, optimizer, lr_scheduler, epoch + 1, device,
