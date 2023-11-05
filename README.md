@@ -36,7 +36,7 @@
 
   本项目引入"滑动窗口"（look_back）的概念，将前$look \_back$时刻的$indicate$向量拼接起来作为模型的输入。如果前$look\_back$不一定全部存在，则补充缺失的全0向量作为弥补。
 
-- "时间嵌入"：对于每个序列长度为$sequence\_length\_of\_j$被试样本$sample_j$，在每一时刻引入一个时间编码：对于所有的数据，采用的一个固定大小的查询字典，将$t\in \{0,1,\ldots,sequence\_length\_of\_j-1\}$映射到一个$time_embedding$维度的向量。
+- "时间嵌入"：对于每个序列长度为$sequence\_length\_of\_j$被试样本$sample_j$，在每一时刻引入一个时间编码：对于所有的数据，采用的一个固定大小的查询字典，将$t\in \{0,1,\ldots,sequence\_length\_of\_j-1\}$映射到一个$time\_embedding$维度的向量。
 #### 输出
 对于当前时间步对应的消费行为指示向量$indicate_i$，模型输出一个51维度的概率值，每个维度的概率值$p$在0到1之间，代表着此类消费行为存在的可能性，一般来说大于0.5（$threshold$）即代表着存在。
 
